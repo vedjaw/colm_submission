@@ -5,7 +5,7 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 import os
-from dataset_specs.exp1_hard_problems import PROBLEMS
+from dataset_specs.dataset import PROBLEMS
 
 BASE_DIR = "problems/exp1"
 REQUIRED_FIELDS = {"id", "category", "coord", "euclid", "vector", "answer"}
