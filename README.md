@@ -91,13 +91,16 @@ This reads `dataset_specs/dataset.py` and writes individual `.txt` files into `p
 
 ## 3. Run Model Inference
 
-All models are queried through the [OpenRouter API](https://openrouter.ai/). Before running, open the relevant script and set the `MODEL` variable to a valid OpenRouter model identifier (e.g., `"google/gemini-2.5-flash"`).
+All models are queried through the [OpenRouter API](https://openrouter.ai/). Before running either script, open it and set the `MODEL` variable to a valid OpenRouter model identifier (e.g., `"google/gemini-2.5-flash"`). The variable is located near the top of each file and is set to a placeholder by default.
 
 There are two prompt strategies:
 
 ### Prompt 1: Direct numeric answer
 
 The model is asked to output only a final numeric answer with no reasoning. This tests raw problem-solving ability.
+
+1. Open `scripts/run_models_prompt1.py` and set `MODEL = "<your_model_name>"` (e.g., `"google/gemini-2.5-flash"`).
+2. Run:
 
 ```bash
 python -m scripts.run_models_prompt1
@@ -107,13 +110,16 @@ python -m scripts.run_models_prompt1
 
 The model is asked to (1) convert the problem into a pure Euclidean format, (2) show its reasoning, and (3) output a structured JSON with `euclidean_conversion`, `reasoning`, and `numeric_answer`. This tests whether explicit representation translation improves invariance.
 
+1. Open `scripts/run_model_prompt2.py` and set `MODEL = "<your_model_name>"`.
+2. Run:
+
 ```bash
 python -m scripts.run_model_prompt2
 ```
 
 Both scripts iterate over all problems and representations, saving raw model outputs to `runs/raw_outputs/<model_name>/`.
 
-**Note:** Each `run_exp1_*.py` file in `scripts/` is a model-specific variant with the `MODEL` variable pre-configured for that model. You can use those directly instead of editing the generic scripts.
+To evaluate multiple models, update the `MODEL` variable and re-run the script for each model.
 
 ---
 
@@ -217,7 +223,6 @@ geometry_llm_eval/
 |   |-- generate_dataset.py     # Step 2: write problem .txt files
 |   |-- run_models_prompt1.py   # Step 3: inference (direct answer prompt)
 |   |-- run_model_prompt2.py    # Step 3: inference (Euclidean conversion prompt)
-|   |-- run_exp1_*.py           # Per-model inference variants
 |   |-- parse_outputs.py        # Step 4a: extract numeric predictions
 |   |-- score_exp1.py           # Step 4b: score against gold answers
 |   |-- tabulation.py           # Step 5.1: summary table
